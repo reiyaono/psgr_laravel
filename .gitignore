@@ -1,2 +1,3 @@
-docker-compose/postgres-data/*
+docker-compose/postgres-data/base/*
+
 
