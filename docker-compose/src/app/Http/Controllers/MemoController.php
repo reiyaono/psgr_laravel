@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Models\Memo;
 
 class MemoController extends Controller
 {
@@ -13,8 +14,38 @@ class MemoController extends Controller
         return view("home", ['memos' => $memos]);
     }
 
-    public function showSubmit()
+    public function showSubmit($id = 0)
     {
-        return view("submit");
+        if ($id != 0) {
+            $memo = Memo::where('id', $id)->get()->first();
+        } else {
+            $memo = (object) ["id" => 0, "title" => "", "content" => ""];
+        }
+        return view("submit", ['memo' => $memo]);
+    }
+
+    public function postSubmit(Request $request, $id = 0)
+    {
+        $title = $request->input('title');
+        $content = $request->input('content');
+        if ($id == 0) {
+            Memo::create([
+                'title' => $title,
+                'content' => $content
+            ]);
+        } else {
+            $memo = Memo::find($id);
+            $memo->update([
+                'title' => $title,
+                'content' => $content
+            ]);
+        }
+        return redirect()->route('memo.home');
+    }
+
+    public function deleteMemo($id)
+    {
+        Memo::destroy($id);
+        return redirect()->route('memo.home');
     }
 }

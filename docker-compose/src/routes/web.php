@@ -21,4 +21,8 @@ Route::get('/', function () {
 // 第一引数に相対パス、第二引数に関数を指定する
 Route::get('/home', [MemoController::class, 'showHome'])->name('memo.home');
 
-Route::get('/submit', [MemoController::class, 'showSubmit'])->name('memo.form');
+Route::get('/submit/{id?}', [MemoController::class, 'showSubmit'])->name('memo.form');
+
+Route::post('/submit/{id?}', [MemoController::class, 'postSubmit'])->name('memo.post');
+
+Route::get('/delete/{id}', [MemoController::class, 'deleteMemo'])->name('memo.delete');

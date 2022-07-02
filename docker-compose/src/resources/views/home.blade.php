@@ -38,24 +38,16 @@
         メモ一覧
         <a href="{{ route('memo.form')}}" class="submit">メモを追加</a>
     </div>
-    <div>{{$memos}}</div>
+    <!-- <div>{{$memos}}</div> -->
     <table class="table">
         <tbody>
-            <tr>
-                <td class="left">メモ１</td>
-                <td><a href="{{ route('memo.form')}}">編集</a></td>
-                <td><a>削除</a></td>
-            </tr>
-            <tr>
-                <td class="left">メモ２</td>
-                <td><a href="{{ route('memo.form')}}">編集</a></td>
-                <td><a>削除</a></td>
-            </tr>
-            <tr>
-                <td class="left">メモ３</td>
-                <td><a href="{{ route('memo.form')}}">編集</a></td>
-                <td><a>削除</a></td>
-            </tr>
+            @foreach ($memos as $memo)
+                <tr>
+                    <td class="left">{{$memo->title}}</td>
+                    <td><a href="{{ route('memo.form', ['id' => $memo->id])}}">編集</a></td>
+                    <td><a>削除</a></td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 </div>
